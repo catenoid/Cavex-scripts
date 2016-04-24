@@ -22,8 +22,8 @@ public class Ground_plane : Mesh_parent {
         float t;
         for (int i=0; i<stairVerts.Length; i++) {
             t = - stairVerts[i].y / cameraView.y;
-			culled[i] = stairVerts[i] + t*cameraView;
-		}
+            culled[i] = stairVerts[i] + t*cameraView;
+        }
         
         // The bounding points of the plane, counter-clockwise from the corner nearest the camera
         Vector3[] bounds = new Vector3 [] {
