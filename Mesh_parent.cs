@@ -8,11 +8,9 @@ abstract public class Mesh_parent : MonoBehaviour {
 	Vector3[] convexVerts;
 	int[] indices;
 	Matrix4x4 reflection = new Matrix4x4 ();
-	bool cavexFlag;
+	bool cavexFlag = true;
     
-	// Use this for initialization
 	void Start () {
-		cavexFlag = true;
         convexVerts = new Vector3[concaveVerts.Length];
         indices = new int[concaveVerts.Length];
         
@@ -22,7 +20,7 @@ abstract public class Mesh_parent : MonoBehaviour {
 		reflection.SetRow (2, new Vector4(-0.666f, -0.666f, 0.333f, 0.666f));
 		reflection.SetRow (3, new Vector4(0, 0, 0, 1));
 		
-        // Assign indices. The vertices are added in triples corresponding to a mesh triangle
+        // Assign indices. The vertices are added in triples corresponding to a mesh triangle, so indices just increment
         for (int i=0; i<concaveVerts.Length; i++) {
 			indices[i] = i;
 		}
@@ -43,7 +41,6 @@ abstract public class Mesh_parent : MonoBehaviour {
         gameObject.GetComponent<MeshFilter>().mesh = msh;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;

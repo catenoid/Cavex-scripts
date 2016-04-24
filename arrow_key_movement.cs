@@ -19,20 +19,16 @@ public class arrow_key_movement : MonoBehaviour {
         moveUp = convexMoveUp;
         moveLeft = convexMoveLeft;
         
-        // Populate the reflection matrix
 		reflection.SetRow (0, new Vector4(0.333f, -0.666f, -0.666f, 0.666f));
 		reflection.SetRow (1, new Vector4(-0.666f, 0.333f, -0.666f, 0.666f));
 		reflection.SetRow (2, new Vector4(-0.666f, -0.666f, 0.333f, 0.666f));
 		reflection.SetRow (3, new Vector4(0, 0, 0, 1));
     }
     
-	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
             transform.position = reflection.MultiplyPoint3x4(transform.position);
-            // A non-spherical Player object will require rotation
             
-            // The arrow keys now correspond to different directions in world space
             if (cavexFlag) {
                 moveUp = concaveMoveUp;
                 moveLeft = concaveMoveLeft;

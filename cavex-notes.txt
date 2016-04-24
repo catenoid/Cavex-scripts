@@ -1,0 +1,39 @@
+"Cavex": Cave exploration with concavity and convexity.
+
+SPECIFICATIONS
+Player navigates a 3D surface, viewed through an isometric projection.
+Player can reflect world across the view vector. The terrain appears identical, but concave surfaces become convex and vice-versa. The camera rotates to preserve the direction of acceleration due to gravity.
+Player can add triangular tiles to the surface to manipulate the terrain. Due to the concave-convex relationship, adding tiles results in excavations in the alternative view.
+
+--- Step goals ---
+PLAYER MOVEMENT
+Collision detection to prevent clipping through walls
+Response to gravity
+Jump ability, in a trajectory corresponding to the instantaneous planar velocity
+
+HIDDEN TERRAIN
+Without inferring plane continuity, the player would fall through the hole in the floor behind features
+To find the bounds of a feature, convex hull of a collection of 2D points?
+Part of the interest was in areas only accessible in one view, where the player can slightly perturb the camera
+
+FLIPPING THE PLAYER
+Player currently spherical, avoiding complications
+What are the Euler angles to sensibly rotate a standing object?
+
+CAMERA
+Requires animation
+
+COMMENTS THAT DON'T FIT ELSEWHERE
+Either build the world in 3D and eviscerate occlusion, or draw as on isometric paper and infer 3D structure from edge concavity
+
+I don't want to have the arbitrary 90 Y rots in the meshes anymore. So set the initial transforms to zero, then move the main camera from:
+Pos (5,5,-5)    Rot (35.26,315,0) to: Pos (7,7,7)     Rot (35.26,225,0)
+The angle across far vertices of a cube is arctan (1/sqrt(2)) = 35.26
+
+What order are the Start() routines called in for inherited objects?
+
+What is the alternate Y axis of movement? I'm lazy, get Unity to do this.
+Find the difference of the transformed points of bounding corners of the plane segment, then normalise. Result: (0.2357023, 0.9428091, 0.2357023)
+
+I don't want to manually triangulate these surfaces!
+Nor do I want to manually crop the plane segments not visible to the camera.
