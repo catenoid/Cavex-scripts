@@ -5,28 +5,43 @@ public class arrow_key_movement : MonoBehaviour {
     Vector3 velocity = new Vector3(0,0,0);
     bool cavexFlag;
     
-    Vector3 moveUp = new Vector3(-1,0,1);
-    Vector3 moveLeft = new Vector3(-1,0,-1);
-    Vector3 moveRight = new Vector3(1,0,1);
-    Vector3 moveDown = new Vector3(1,0,-1);
+    Vector3 moveUp = new Vector3(-1,0,-1);
+    Vector3 moveDown = new Vector3(1,0,1);
+    
+    Vector3 moveLeft = new Vector3(1,0,-1);
+    Vector3 moveRight = new Vector3(-1,0,1);
 	
+	Matrix4x4 reflection = new Matrix4x4 ();
+    
     void Start() {
         cavexFlag = true;
+        // Populate the reflection matrix
+		reflection.SetRow (0, new Vector4(0.333f, -0.666f, -0.666f, 0.666f));
+		reflection.SetRow (1, new Vector4(-0.666f, 0.333f, -0.666f, 0.666f));
+		reflection.SetRow (2, new Vector4(-0.666f, -0.666f, 0.333f, 0.666f));
+		reflection.SetRow (3, new Vector4(0, 0, 0, 1));
     }
     
 	// Update is called once per frame
 	void Update () {
-        // Player inverts with the terrain
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if(cavexFlag) {
-                transform.position += 2*Vector3.down;
+            transform.position = reflection.MultiplyPoint3x4(transform.position);
+            // A non-spherical Player object will require rotation
+            
+            // The arrow keys now correspond to different directions in world space
+            // Rotate the camera so that acceleration due to gravity still points towards the bottom of the screen
+            // Smooth rotation is not working, why?
+            //Quaternion currentView = Camera.main.transform.rotation;
+            //Quaternion.RotateTowards(currentView, targetView, 5f);
+            if (cavexFlag) {
+                Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,180f);
                 cavexFlag = false;
             } else {
-                transform.position -= 2*Vector3.down;
+                Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,0f);
                 cavexFlag = true;
             }
         }
-    
+        
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
             velocity += moveUp;
         }
