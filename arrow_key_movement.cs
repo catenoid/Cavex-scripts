@@ -6,10 +6,12 @@ public class arrow_key_movement : MonoBehaviour {
     bool cavexFlag;
     
     Vector3 moveUp = new Vector3(-1,0,-1);
-    Vector3 moveDown = new Vector3(1,0,1);
-    
     Vector3 moveLeft = new Vector3(1,0,-1);
-    Vector3 moveRight = new Vector3(-1,0,1);
+
+    Vector3 convexMoveUp = new Vector3(-1,0,-1);
+    Vector3 convexMoveLeft = new Vector3(1,0,-1);
+    Vector3 concaveMoveUp = new Vector3(-0.2357023f, -0.9428091f, -0.2357023f); // I have failed the Linear Algebra gods
+    Vector3 concaveMoveLeft = new Vector3(-1,0,1);
 	
 	Matrix4x4 reflection = new Matrix4x4 ();
     
@@ -35,9 +37,13 @@ public class arrow_key_movement : MonoBehaviour {
             //Quaternion.RotateTowards(currentView, targetView, 5f);
             if (cavexFlag) {
                 Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,180f);
+                moveUp = concaveMoveUp;
+                moveLeft = concaveMoveLeft;
                 cavexFlag = false;
             } else {
                 Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,0f);
+                moveUp = convexMoveUp;
+                moveLeft = convexMoveLeft;
                 cavexFlag = true;
             }
         }
@@ -57,17 +63,17 @@ public class arrow_key_movement : MonoBehaviour {
         }
         
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            velocity += moveRight;
+            velocity -= moveLeft;
         }
         if (Input.GetKeyUp(KeyCode.RightArrow)) {
-            velocity -= moveRight;
+            velocity += moveLeft;
         }
         
         if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            velocity += moveDown;
+            velocity -= moveUp;
         }
         if (Input.GetKeyUp(KeyCode.DownArrow)) {
-            velocity -= moveDown;
+            velocity += moveUp;
         }
         
         transform.position += 0.05F*velocity;
