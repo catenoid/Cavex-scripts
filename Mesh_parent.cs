@@ -39,6 +39,7 @@ abstract public class Mesh_parent : MonoBehaviour {
 		
 		// Set up game object with mesh
         gameObject.GetComponent<MeshFilter>().mesh = msh;
+        gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
 	}
 	
 	void Update () {
