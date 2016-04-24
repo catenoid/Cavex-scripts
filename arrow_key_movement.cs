@@ -4,9 +4,8 @@ using System.Collections;
 public class arrow_key_movement : MonoBehaviour {
     Vector3 velocity = new Vector3(0,0,0);
     bool cavexFlag;
-    
-    Vector3 moveUp = new Vector3(-1,0,-1);
-    Vector3 moveLeft = new Vector3(1,0,-1);
+    Vector3 moveUp;
+    Vector3 moveLeft;
 
     Vector3 convexMoveUp = new Vector3(-1,0,-1);
     Vector3 convexMoveLeft = new Vector3(1,0,-1);
@@ -17,6 +16,9 @@ public class arrow_key_movement : MonoBehaviour {
     
     void Start() {
         cavexFlag = true;
+        moveUp = convexMoveUp;
+        moveLeft = convexMoveLeft;
+        
         // Populate the reflection matrix
 		reflection.SetRow (0, new Vector4(0.333f, -0.666f, -0.666f, 0.666f));
 		reflection.SetRow (1, new Vector4(-0.666f, 0.333f, -0.666f, 0.666f));
@@ -31,17 +33,11 @@ public class arrow_key_movement : MonoBehaviour {
             // A non-spherical Player object will require rotation
             
             // The arrow keys now correspond to different directions in world space
-            // Rotate the camera so that acceleration due to gravity still points towards the bottom of the screen
-            // Smooth rotation is not working, why?
-            //Quaternion currentView = Camera.main.transform.rotation;
-            //Quaternion.RotateTowards(currentView, targetView, 5f);
             if (cavexFlag) {
-                Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,180f);
                 moveUp = concaveMoveUp;
                 moveLeft = concaveMoveLeft;
                 cavexFlag = false;
             } else {
-                Camera.main.transform.rotation = Quaternion.Euler(35.26f,225f,0f);
                 moveUp = convexMoveUp;
                 moveLeft = convexMoveLeft;
                 cavexFlag = true;
