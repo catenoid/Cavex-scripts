@@ -2,13 +2,11 @@ using UnityEngine;
 using System.Collections;
 
 public class Camera_flip : MonoBehaviour {
-    bool cavexFlag = true;
-    Quaternion targetView;
     bool rotating = false;
     bool clockwise = true;
     float z = 0;
     float nextZ;
-    float rotationSpeed = 60;
+    float rotationSpeed = 300;
     
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
