@@ -24,20 +24,11 @@ Player currently spherical, avoiding complications
 What are the Euler angles to sensibly rotate a standing object?
 
 CAMERA
-Requires animation 180 degrees about Z
 Click and drag conical rotation. Will this be perspective or orthographic view?
 
 COMMENTS THAT DON'T FIT ELSEWHERE
 Either build the world in 3D and eviscerate occlusion, or draw as on isometric paper and infer 3D structure from edge concavity
 
-I don't want to have the arbitrary 90 Y rots in the meshes anymore. So set the initial transforms to zero, then move the main camera from:
-Pos (5,5,-5)    Rot (35.26,315,0) to: Pos (7,7,7)     Rot (35.26,225,0)
-The angle across far vertices of a cube is arctan (1/sqrt(2)) = 35.26
-
 What order are the Start() routines called in for inherited objects?
 
-What is the alternate Y axis of movement? I'm lazy, get Unity to do this.
-Find the difference of the transformed points of bounding corners of the plane segment, then normalise. Result: (0.2357023, 0.9428091, 0.2357023)
-
-I don't want to manually triangulate these surfaces!
-Nor do I want to manually crop the plane segments not visible to the camera.
+Triangulation
