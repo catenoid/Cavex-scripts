@@ -27,10 +27,10 @@ public class Ground_plane : Mesh_parent {
         
         // The bounding points of the plane, counter-clockwise from the corner nearest the camera
         Vector3[] bounds = new Vector3 [] {
-            new Vector3(5,0,5),
-            new Vector3(-5,0,5),
-            new Vector3(-5,0,-5),
-            new Vector3(5,0,-5),
+            new Vector3(10,0,10),
+            new Vector3(-10,0,10),
+            new Vector3(-10,0,-10),
+            new Vector3(10,0,-10),
         };
         
         // Populate concaveVerts with the required bounding points and cull points
