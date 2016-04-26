@@ -53,6 +53,7 @@ abstract public class Mesh_parent : MonoBehaviour {
                 cavexFlag = true;
             }
             msh.RecalculateNormals();
+            gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
         }
     }
 }
