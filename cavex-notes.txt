@@ -7,28 +7,34 @@ Player can add triangular tiles to the surface to manipulate the terrain. Due to
 
 --- Step goals ---
 PLAYER MOVEMENT
-Collision detection to prevent clipping through walls
-Jump ability, in a trajectory corresponding to the instantaneous planar velocity
+Possible to clip backwards through a mesh. Ideally in a finished map, the terrain meshes are closed which should resolve this.
+Maybe don't permit jumping. This way players must gain height through inversions.
+Currently the arrow keys adjust position, which appears unnatural when the ball is rolling.
+Having keys impart a coplanar force makes more sense, but only applies to a spherical mesh collider.
 
 HIDDEN TERRAIN
-Without inferring plane continuity, the player would fall through the hole in the floor behind features
-To find the bounds of a feature, convex hull of a collection of 2D points?
-Part of the interest was in areas only accessible in one view, where the player can slightly perturb the camera
+Without inferring plane continuity, the player falls through the hole in the floor behind features
+Part of the interest was in areas only accessible in one view, where the player can slightly perturb the camera to explore
 In this case one mesh is flipped, and two meshes swap visibility
 
 FLIPPING THE PLAYER
-Player currently spherical, avoiding complications
+Mesh renderer of player is currently spherical, avoiding complications
 What are the Euler angles to sensibly rotate a standing object?
 
 CAMERA
 Click and drag conical rotation. Will this be perspective or orthographic view?
+Alternatively, how about a smaller first person view in addition to the main camera?
 
 COMMENTS THAT DON'T FIT ELSEWHERE
 Either build the world in 3D and eviscerate occlusion, or draw as on isometric paper and infer 3D structure from edge concavity
-
 What order are the Start() routines called in for inherited objects?
-
 Triangulation
-
 To apply Unity's physics engine, add a RigidBody component to the sphere.
-Setting the ball's velocity to zero prior to flipping doesn't seem necessary.
+Setting the ball's velocity to zero prior to flipping doesn't seem necessary. In fact, without adds an interesting mechanism of "creating" momentum.
+
+The ball's Y position is drifting from 0.5 after repeat flips. With a RigidBody on the sphere this is irrelevant.
+
+Reflection probe zone: Objects enter it, they receive the cube map defined by the origin of the probe.
+The sphere is not reflective, the *floor* is. So "size" irrelevant with only one probe in the scene?
+"The zones of the full set of probes should collectively cover all areas of the scene where a reflective object might pass."
+Why does the reflection look so terrible, regardless of resolution? Gah.
