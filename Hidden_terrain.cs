@@ -24,20 +24,21 @@ abstract public class Hidden_terrain : MonoBehaviour {
         gameObject.GetComponent<MeshFilter>().mesh = msh;
         gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     
-        if (cavexFlag) {
-            gameObject.SetActive(true);
-        } else {
-            gameObject.SetActive(false);
+        if (!cavexFlag) {
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<MeshCollider>().enabled = false;
         }
     }
     
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (cavexFlag) {
-                gameObject.SetActive(false);
+                gameObject.GetComponent<Renderer>().enabled = false;
+                gameObject.GetComponent<MeshCollider>().enabled = false;
                 cavexFlag = false;
             } else {
-                gameObject.SetActive(true);
+                gameObject.GetComponent<Renderer>().enabled = true;
+                gameObject.GetComponent<MeshCollider>().enabled = true;
                 cavexFlag = true;
             }
         }

@@ -39,9 +39,4 @@ The sphere is not reflective, the *floor* is. So "size" irrelevant with only one
 "The zones of the full set of probes should collectively cover all areas of the scene where a reflective object might pass."
 Why does the reflection look so terrible, regardless of resolution? Gah.
 
-Inactivating an object means it can't run it's own script to reactivate itself.
-Instead, disable the Mesh Collider and Mesh Renderer
-
-Sod's Law, I got the triangles inside out.
-
 Need to extend the ground plane to stop the floor of the cave poking out.
