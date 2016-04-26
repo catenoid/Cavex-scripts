@@ -14,10 +14,9 @@ public class arrow_key_movement : MonoBehaviour {
     
     Vector3 convexMoveDown;
     Vector3 concaveMoveDown;
+    float g = 9.8f;
     
     Matrix4x4 reflection = new Matrix4x4 ();
-    
-    //Rigidbody rb;
     
     void Start() {
         cavexFlag = true;
@@ -31,8 +30,6 @@ public class arrow_key_movement : MonoBehaviour {
         reflection.SetRow (1, new Vector4(-0.666f, 0.333f, -0.666f, 0.666f));
         reflection.SetRow (2, new Vector4(-0.666f, -0.666f, 0.333f, 0.666f));
         reflection.SetRow (3, new Vector4(0, 0, 0, 1));
-        
-        //rb = GetComponent<Rigidbody>();
     }
     
     void OnCollisionEnter(Collision collision) {
@@ -41,20 +38,19 @@ public class arrow_key_movement : MonoBehaviour {
     
     void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // Freeze the ball before inversion
-            // Also need to change the direction of gravity
-            //rb.velocity = Vector3.zero;
             if (cavexFlag) {
                 // On inversion, the player object appears to become it's reflection, were the floor a mirror.
                 transform.position += convexMoveDown;
                 moveUp = concaveMoveUp;
                 moveLeft = concaveMoveLeft;
                 cavexFlag = false;
+                Physics.gravity = g * concaveMoveDown;
             } else {
                 transform.position += concaveMoveDown;
                 moveUp = convexMoveUp;
                 moveLeft = convexMoveLeft;
                 cavexFlag = true;
+                Physics.gravity = g * convexMoveDown;
             }
             transform.position = reflection.MultiplyPoint3x4(transform.position);
         }

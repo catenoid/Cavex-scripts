@@ -8,10 +8,7 @@ Player can add triangular tiles to the surface to manipulate the terrain. Due to
 --- Step goals ---
 PLAYER MOVEMENT
 Collision detection to prevent clipping through walls
-Response to gravity
 Jump ability, in a trajectory corresponding to the instantaneous planar velocity
-Player object becomes it's reflection. Before transforming the position, reflect over the plane of contact
-Player with spherical rigid body: Got to stop falling off the world when we flip. Freeze the ball, rotate the Physics.gravity vector
 
 HIDDEN TERRAIN
 Without inferring plane continuity, the player would fall through the hole in the floor behind features
@@ -32,3 +29,6 @@ Either build the world in 3D and eviscerate occlusion, or draw as on isometric p
 What order are the Start() routines called in for inherited objects?
 
 Triangulation
+
+To apply Unity's physics engine, add a RigidBody component to the sphere.
+Setting the ball's velocity to zero prior to flipping doesn't seem necessary.
