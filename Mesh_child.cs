@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mesh_child : Mesh_parent {
+public class Mesh_child : Visible_surface {
     Vector3[] verts = new Vector3[] {
         // Stairs
         new Vector3(0, 0, 0),       new Vector3(-2, 1, 0),      new Vector3(-2, 0, 0),

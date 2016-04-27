@@ -3,7 +3,7 @@ using System.Collections;
 
 // Make sure you add a mesh renderer (with a material) and mesh filter or else it'll be invisible
 
-abstract public class Mesh_parent : MonoBehaviour {
+abstract public class Visible_surface : Surface {
     protected Vector3[] concaveVerts; //needed
     Vector3[] convexVerts;
     int[] indices;
@@ -35,7 +35,7 @@ abstract public class Mesh_parent : MonoBehaviour {
         gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     }
     
-    public void Invert() {
+    override public void Invert() {
         Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;
         if (cavexFlag) {
             msh.vertices = convexVerts;

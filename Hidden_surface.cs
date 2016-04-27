@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-abstract public class Hidden_terrain : MonoBehaviour {
+abstract public class Hidden_surface : Surface {
     protected Vector3[] vertices; // needed
     protected bool initially_visible = true;
     int[] indices;
@@ -30,7 +30,7 @@ abstract public class Hidden_terrain : MonoBehaviour {
         }
     }
     
-    public void Invert() {
+    override public void Invert() {
         gameObject.GetComponent<Renderer>().enabled ^= true;
         gameObject.GetComponent<MeshCollider>().enabled ^= true;
     }

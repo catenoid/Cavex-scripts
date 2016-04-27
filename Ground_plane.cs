@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Ground_plane : Mesh_parent {
+public class Ground_plane : Visible_surface {
     public Ground_plane () {
         Vector3[] stairVerts = new Vector3[] {
             new Vector3(0, 0, 0),

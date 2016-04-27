@@ -3,8 +3,7 @@ using System.Collections;
 
 public class Camera_flip : MonoBehaviour {
     public Sun sun;
-    public Mesh_parent[] map;
-    public Hidden_terrain[] hidden_map;
+    public Surface[] map;
     public arrow_key_movement player;
 
     public float rotationSpeed = 300;
@@ -53,11 +52,8 @@ public class Camera_flip : MonoBehaviour {
     void DawnOnAlternatePlane() {
         rotating = false;
         sun.NewDay();
-        foreach (Mesh_parent terrain in map) {
-            terrain.Invert();
-        }
-        foreach (Hidden_terrain terrain in hidden_map) {
-            terrain.Invert();
+        foreach (Surface surface in map) {
+            surface.Invert();
         }
         player.Invert();
         float offset = transform.position.x;
