@@ -4,6 +4,7 @@ using System.Collections;
 public class Camera_flip : MonoBehaviour {
     public Sun sun;
     public Mesh_parent[] map;
+    public arrow_key_movement player;
 
     public float rotationSpeed = 300;
 
@@ -54,6 +55,7 @@ public class Camera_flip : MonoBehaviour {
         foreach (Mesh_parent terrain in map) {
             terrain.Invert();
         }
+        player.Invert();
         float offset = transform.position.x;
         Vector3 camera_displacement = new Vector3(offset, 0, offset);
         transform.position -= 2*camera_displacement;
