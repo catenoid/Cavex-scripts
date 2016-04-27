@@ -49,8 +49,4 @@ public class Ground_plane : Mesh_parent {
             bounds[0], culled[7], culled[0],
         };
     }
-    
-    void OnCollisionEnter(Collision collision) {
-        Debug.Log("Collision GROUND PLANE");
-    }
 }

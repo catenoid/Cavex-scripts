@@ -32,10 +32,6 @@ public class arrow_key_movement : MonoBehaviour {
         reflection.SetRow (3, new Vector4(0, 0, 0, 1));
     }
     
-    void OnCollisionEnter(Collision collision) {
-        Debug.Log("Collision PLAYER SPHERE");
-    }
-    
     void Update () {
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (cavexFlag) {

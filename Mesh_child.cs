@@ -21,8 +21,4 @@ public class Mesh_child : Mesh_parent {
         };
         
     public Mesh_child() {concaveVerts = verts;}
-    
-    void OnCollisionEnter(Collision collision) {
-        Debug.Log("Collision STAIRS");
-    }
 }
