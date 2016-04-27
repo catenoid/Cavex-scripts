@@ -6,35 +6,39 @@ using System.Collections;
 abstract public class Mesh_parent : MonoBehaviour {
     protected Vector3[] concaveVerts; //needed
     Vector3[] convexVerts;
-    int[] indices;
-    Matrix4x4 reflection = new Matrix4x4 ();
+    
+    int[] concaveIndices;
+    int[] convexIndices;
+    
     bool cavexFlag = true;
     
     void Start () {
         convexVerts = new Vector3[concaveVerts.Length];
-        indices = new int[concaveVerts.Length];
         
-        // Populate the reflection matrix
-        reflection.SetRow (0, new Vector4(0.333f, -0.666f, -0.666f, 0.666f));
-        reflection.SetRow (1, new Vector4(-0.666f, 0.333f, -0.666f, 0.666f));
-        reflection.SetRow (2, new Vector4(-0.666f, -0.666f, 0.333f, 0.666f));
-        reflection.SetRow (3, new Vector4(0, 0, 0, 1));
-        
-        // Assign indices. The vertices are added in triples corresponding to a mesh triangle, so indices just increment
-        for (int i=0; i<concaveVerts.Length; i++) {
-            indices[i] = i;
-        }
+        concaveIndices = new int[concaveVerts.Length];
+        convexIndices = new int[convexVerts.Length];
         
         // Perform reflection
         for (int i=0; i<concaveVerts.Length; i++) {
-            convexVerts[i] = reflection.MultiplyPoint3x4(concaveVerts[i]);
+            convexVerts[i] = concaveVerts[i] - 2*concaveVerts[i].y*Vector3.up;
+        }
+        
+        // The vertices are added in triples corresponding to a mesh triangle. Generate the sequence 0 1 2 3 4 5 ...
+        for (int i=0; i<concaveVerts.Length; i++) {
+            concaveIndices[i] = i;
         }
 
+        // The surface normals invert. Generate the sequence 0 2 1 3 5 4 6 8 7 ...
+        // Ok, I was wrong
+        for (int i=0; i<convexVerts.Length; i++) {
+            convexIndices[i] = i; //3*(i/3) + (i+1)%3 - 1;
+        }
+        
         // Create the mesh
         Mesh msh = new Mesh();
         msh.Clear();
         msh.vertices = concaveVerts;
-        msh.triangles = indices;
+        msh.triangles = concaveIndices;
         msh.RecalculateNormals();
         
         // Set up game object with mesh
@@ -46,9 +50,11 @@ abstract public class Mesh_parent : MonoBehaviour {
         Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;
         if (cavexFlag) {
             msh.vertices = convexVerts;
+            msh.triangles = convexIndices;
             cavexFlag = false;
         } else {
             msh.vertices = concaveVerts;
+            msh.triangles = concaveIndices;
             cavexFlag = true;
         }
         msh.RecalculateNormals();

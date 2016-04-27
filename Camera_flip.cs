@@ -12,6 +12,8 @@ public class Camera_flip : MonoBehaviour {
     float z = 0;
     float nextZ;
     
+    float y_euler = 225f;
+    
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (rotating) {
@@ -26,44 +28,37 @@ public class Camera_flip : MonoBehaviour {
         if (rotating) {
             if (clockwise) {
                 nextZ = z + Time.deltaTime * rotationSpeed;
-                if (z >= 0 && z < 180) {
-                    if (nextZ >= 180) {
-                        nextZ = 180;
-                        DawnOnAlternatePlane();
-                    }
-                } else if (z >= 180) {
-                    if (nextZ >= 360) {
-                        nextZ = 0;
-                        DawnOnAlternatePlane();
-                    }
+                if (nextZ >= 180) {
+                    DawnOnAlternatePlane();
                 }
             } else {
-                // counter-clockwise rotation
                 nextZ = z - Time.deltaTime * rotationSpeed;
-                if (z >= 0 && z < 180) {
-                    if (nextZ < 0) {
-                        rotating = false;
-                        nextZ = 0;
-                        sun.AbortedInversion();
-                    }
-                } else if (z >= 180) {
-                    if (nextZ < 180) {
-                        rotating = false;
-                        nextZ = 180;
-                        sun.AbortedInversion();
-                    }
+                if (nextZ < 0) {
+                    InversionCancelled();
                 }
             }
-            transform.rotation = Quaternion.Euler(35.26f,225f,nextZ);
+            transform.rotation = Quaternion.Euler(35.26f,y_euler,nextZ);
             z = nextZ;
         }
     }
+    
+    void InversionCancelled() {
+        rotating = false;
+        nextZ = 0;
+        sun.AbortedInversion();
+    }
+    
     void DawnOnAlternatePlane() {
         rotating = false;
         sun.NewDay();
         foreach (Mesh_parent terrain in map) {
             terrain.Invert();
         }
+        float offset = transform.position.x;
+        Vector3 camera_displacement = new Vector3(offset, 0, offset);
+        transform.position -= 2*camera_displacement;
+        y_euler = 270 - y_euler;
+        nextZ = 0;
         // swap concave, convex only
     }
 }
