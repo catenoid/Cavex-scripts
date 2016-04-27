@@ -30,17 +30,15 @@ abstract public class Hidden_terrain : MonoBehaviour {
         }
     }
     
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (cavexFlag) {
-                gameObject.GetComponent<Renderer>().enabled = false;
-                gameObject.GetComponent<MeshCollider>().enabled = false;
-                cavexFlag = false;
-            } else {
-                gameObject.GetComponent<Renderer>().enabled = true;
-                gameObject.GetComponent<MeshCollider>().enabled = true;
-                cavexFlag = true;
-            }
+    public void Invert() {
+        if (cavexFlag) {
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<MeshCollider>().enabled = false;
+            cavexFlag = false;
+        } else {
+            gameObject.GetComponent<Renderer>().enabled = true;
+            gameObject.GetComponent<MeshCollider>().enabled = true;
+            cavexFlag = true;
         }
     }
 }
