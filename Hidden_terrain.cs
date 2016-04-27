@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 abstract public class Hidden_terrain : MonoBehaviour {
-    protected bool cavexFlag; // needed
     protected Vector3[] vertices; // needed
+    protected bool initially_visible = true;
     int[] indices;
     
     void Start() {
@@ -24,7 +24,7 @@ abstract public class Hidden_terrain : MonoBehaviour {
         gameObject.GetComponent<MeshFilter>().mesh = msh;
         gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     
-        if (!cavexFlag) {
+        if (!initially_visible) {
             gameObject.GetComponent<Renderer>().enabled = false;
             gameObject.GetComponent<MeshCollider>().enabled = false;
         }
@@ -33,6 +33,5 @@ abstract public class Hidden_terrain : MonoBehaviour {
     public void Invert() {
         gameObject.GetComponent<Renderer>().enabled ^= true;
         gameObject.GetComponent<MeshCollider>().enabled ^= true;
-        cavexFlag ^= true;
     }
 }
