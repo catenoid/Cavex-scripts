@@ -2,19 +2,24 @@ using UnityEngine;
 using System.Collections;
 
 public class Camera_flip : MonoBehaviour {
+    public Sun sun;
+
+    public float rotationSpeed = 300;
+
     bool rotating = false;
     bool clockwise = true;
     float z = 0;
     float nextZ;
-    float rotationSpeed = 300;
     
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if (rotating && clockwise) {
-                clockwise = false;
+            if (rotating) {
+                clockwise = !clockwise;
+                sun.Reverse();
             } else {
                 clockwise = true;
                 rotating = true;
+                sun.ForceSunset();
             }
         }
         if (rotating) {
@@ -24,11 +29,13 @@ public class Camera_flip : MonoBehaviour {
                     if (nextZ >= 180) {
                         rotating = false;
                         nextZ = 180;
+                        sun.NewDay();
                     }
                 } else if (z >= 180) {
                     if (nextZ >= 360) {
                         rotating = false;
                         nextZ = 0;
+                        sun.NewDay();
                     }
                 }
             } else {
@@ -38,11 +45,13 @@ public class Camera_flip : MonoBehaviour {
                     if (nextZ < 0) {
                         rotating = false;
                         nextZ = 0;
+                        sun.AbortedInversion();
                     }
                 } else if (z >= 180) {
                     if (nextZ < 180) {
                         rotating = false;
                         nextZ = 180;
+                        sun.AbortedInversion();
                     }
                 }
             }

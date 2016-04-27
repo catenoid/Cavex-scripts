@@ -6,6 +6,9 @@ Player can reflect world across the view vector. The terrain appears identical, 
 Player can add triangular tiles to the surface to manipulate the terrain. Due to the concave-convex relationship, adding tiles results in excavations in the alternative view.
 
 --- Step goals ---
+THE "YOU'VE BEEN DOING THIS ALL WRONG" EPIPHANY MOMENT
+Flip the visible mesh over the y plane and translate the camera, instead of using the current reflection matrix
+
 PLAYER MOVEMENT
 Currently the arrow keys adjust position, which appears unnatural when the ball is rolling.
 Having keys impart a coplanar force makes more sense, but only applies to a spherical mesh collider.
@@ -14,10 +17,22 @@ FLIPPING THE PLAYER
 Mesh renderer of player is currently spherical, avoiding complications
 What are the Euler angles to sensibly rotate a standing object?
 Only allow inversion when the player and player's reflection are visible.
+Remove the direct references to the space bar
 
 CAMERA
 Click and drag conical rotation. Will this be perspective or orthographic view?
 Alternatively, how about a smaller first person view in addition to the main camera?
+Count the angular displacement from 0 to 180, in order to remove unnecessary if statements
+Have the camera conduct the directional light
+
+SUN
+When idle: advance every Update
+World invert command: Simultaneously,
+ - Camera begins its rotation
+ - Advance so sunset coincides with the end of camera's motion (Stall if night)
+ - At sunset, invert visible meshes and alternate concave/convex meshes
+ - Return to idle at sunrise (or the time at inversion?)
+Cancelling the flip should revert the sun to its position when the space bar was pressed
 
 COMMENTS THAT DON'T FIT ELSEWHERE
 Either build the world in 3D and eviscerate occlusion, or draw as on isometric paper and infer 3D structure from edge concavity
