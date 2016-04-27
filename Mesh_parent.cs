@@ -42,18 +42,16 @@ abstract public class Mesh_parent : MonoBehaviour {
         gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     }
     
-    void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;
-            if (cavexFlag) {
-                msh.vertices = convexVerts;
-                cavexFlag = false;
-            } else {
-                msh.vertices = concaveVerts;
-                cavexFlag = true;
-            }
-            msh.RecalculateNormals();
-            gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
+    public void Invert() {
+        Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;
+        if (cavexFlag) {
+            msh.vertices = convexVerts;
+            cavexFlag = false;
+        } else {
+            msh.vertices = concaveVerts;
+            cavexFlag = true;
         }
+        msh.RecalculateNormals();
+        gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     }
 }

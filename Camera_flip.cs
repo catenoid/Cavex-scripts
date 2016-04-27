@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Camera_flip : MonoBehaviour {
     public Sun sun;
+    public Mesh_parent[] map;
 
     public float rotationSpeed = 300;
 
@@ -27,15 +28,13 @@ public class Camera_flip : MonoBehaviour {
                 nextZ = z + Time.deltaTime * rotationSpeed;
                 if (z >= 0 && z < 180) {
                     if (nextZ >= 180) {
-                        rotating = false;
                         nextZ = 180;
-                        sun.NewDay();
+                        DawnOnAlternatePlane();
                     }
                 } else if (z >= 180) {
                     if (nextZ >= 360) {
-                        rotating = false;
                         nextZ = 0;
-                        sun.NewDay();
+                        DawnOnAlternatePlane();
                     }
                 }
             } else {
@@ -58,5 +57,13 @@ public class Camera_flip : MonoBehaviour {
             transform.rotation = Quaternion.Euler(35.26f,225f,nextZ);
             z = nextZ;
         }
+    }
+    void DawnOnAlternatePlane() {
+        rotating = false;
+        sun.NewDay();
+        foreach (Mesh_parent terrain in map) {
+            terrain.Invert();
+        }
+        // swap concave, convex only
     }
 }
