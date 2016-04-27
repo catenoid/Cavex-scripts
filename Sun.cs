@@ -12,8 +12,8 @@ public class Sun : MonoBehaviour {
     double camera_rotation_duration;
     double hustle_factor;
     
-    int day_of_year = 28;        // = 1 on January 1st. My birthday is Jan 28th
-    double latitude = 51;        // The cafe next door is called 51 Degrees North
+    int day_of_year = 100;        // = 1 on January 1st
+    double latitude = 51 * (Math.PI/180);        // The cafe next door is called 51 Degrees North
     double hour_at_start = 10;   // Start the game at 10am
     double hour_angle;           // Rotates by 15 degrees every hour. Zero at noon, positive in the afternoon
     double declination_angle;
@@ -28,9 +28,9 @@ public class Sun : MonoBehaviour {
     
     void Start() {
         declination_angle = 23.45 * (Math.PI/180) * Math.Sin(2*Math.PI*(284 + day_of_year)/36.25);
-        hour_angle_at_sunset = Math.Tan(declination_angle) * Math.Tan(latitude);
+        hour_angle_at_sunset = -Math.Tan(declination_angle) * Math.Tan(latitude);
         camera_rotation_duration = 180 / cf.rotationSpeed;
-        hour_angle = 15*(hour_at_start - 12);
+        hour_angle = (Math.PI/12)*(hour_at_start - 12);
         transform.rotation = Sun_rotation(hour_angle);
         rotation_speed = idle_rotation_speed;
     }
@@ -41,11 +41,11 @@ public class Sun : MonoBehaviour {
         } else {
             hour_angle -= Time.deltaTime * rotation_speed;
         }
+        hour_angle = hour_angle % (2*Math.PI);
         transform.rotation = Sun_rotation(hour_angle);
     }
     
     Quaternion Sun_rotation(double hour_angle) {
-        hour_angle = hour_angle % 360;
         altitude = Math.Sin(declination_angle)*Math.Sin(latitude) + Math.Cos(declination_angle)*Math.Cos(hour_angle)*Math.Cos(latitude);
         azimuth = ( Math.Sin(hour_angle)*Math.Cos(declination_angle) ) / Math.Cos(altitude);
         Vector3 sun_position = north + Sun_offset_from_north(azimuth, altitude);
@@ -54,8 +54,8 @@ public class Sun : MonoBehaviour {
     
     Vector3 Sun_offset_from_north(double azimuth, double altitude) {
         float x = (float) (Math.Cos(altitude) * Math.Cos(azimuth));
-        float y = (float) Math.Sin(altitude);
-        float z = (float) (Math.Cos(altitude) * Math.Sin(azimuth));
+        float y = (float) (-Math.Sin(altitude));
+        float z = (float) (-Math.Cos(altitude) * Math.Sin(azimuth));
         return new Vector3(x,y,z);
     }
     
