@@ -31,14 +31,8 @@ abstract public class Hidden_terrain : MonoBehaviour {
     }
     
     public void Invert() {
-        if (cavexFlag) {
-            gameObject.GetComponent<Renderer>().enabled = false;
-            gameObject.GetComponent<MeshCollider>().enabled = false;
-            cavexFlag = false;
-        } else {
-            gameObject.GetComponent<Renderer>().enabled = true;
-            gameObject.GetComponent<MeshCollider>().enabled = true;
-            cavexFlag = true;
-        }
+        gameObject.GetComponent<Renderer>().enabled ^= true;
+        gameObject.GetComponent<MeshCollider>().enabled ^= true;
+        cavexFlag ^= true;
     }
 }

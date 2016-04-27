@@ -65,6 +65,5 @@ public class Camera_flip : MonoBehaviour {
         transform.position -= 2*camera_displacement;
         y_euler = 270 - y_euler;
         nextZ = 0;
-        // swap concave, convex only
     }
 }

@@ -39,11 +39,10 @@ abstract public class Mesh_parent : MonoBehaviour {
         Mesh msh = gameObject.GetComponent<MeshFilter>().mesh;
         if (cavexFlag) {
             msh.vertices = convexVerts;
-            cavexFlag = false;
         } else {
             msh.vertices = concaveVerts;
-            cavexFlag = true;
         }
+        cavexFlag = !cavexFlag;
         msh.RecalculateNormals();
         gameObject.GetComponent<MeshCollider>().sharedMesh = msh;
     }
