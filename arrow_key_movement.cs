@@ -2,9 +2,14 @@
 using System.Collections;
 
 public class arrow_key_movement : MonoBehaviour {
-    Vector3 velocity = new Vector3(0,0,0);
     Vector3 moveUp = new Vector3(-1,0,-1);
     Vector3 moveLeft = new Vector3(1,0,-1);
+    Rigidbody rb;
+    public float speed = 10;
+    
+    void Start() {
+        rb = GetComponent<Rigidbody>();
+    }
     
     public void Invert() {
         transform.position -= 0.5f*Vector3.up;  // 0.5 to offset the centre of the sphere
@@ -14,35 +19,10 @@ public class arrow_key_movement : MonoBehaviour {
         moveLeft = -moveLeft;
     } 
     
-    void Update () {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            velocity += moveUp;
-        }
-        if (Input.GetKeyUp(KeyCode.UpArrow)) {
-            velocity -= moveUp;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            velocity += moveLeft;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
-            velocity -= moveLeft;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            velocity -= moveLeft;
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow)) {
-            velocity += moveLeft;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            velocity -= moveUp;
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow)) {
-            velocity += moveUp;
-        }
-        
-        transform.position += 0.05F*velocity;
+    void FixedUpdate () {
+		float horizontal = Input.GetAxis ("Horizontal");
+		float vertical = Input.GetAxis ("Vertical");
+		Vector3 movement = moveUp*vertical -moveLeft*horizontal;
+		rb.AddForce(movement*speed);
     }
 }
