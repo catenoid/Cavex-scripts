@@ -6,17 +6,12 @@ Player can reflect world across the view vector. The terrain appears identical, 
 Player can add triangular tiles to the surface to manipulate the terrain. Due to the concave-convex relationship, adding tiles results in excavations in the alternative view.
 
 --- Step goals ---
-PLAYER MOVEMENT
-Currently the arrow keys adjust position, which appears unnatural when the ball is rolling.
-Having keys impart a coplanar force makes more sense, but only applies to a spherical mesh collider.
-
 FLIPPING THE PLAYER
 Only allow inversion when the player and player's reflection are visible.
-Remove the direct references to the space bar
+Smooth transition
 
 CAMERA
-Click and drag conical rotation. Will this be perspective or orthographic view?
-Alternatively, how about a smaller first person view in addition to the main camera?
+Facility to view hidden terrain: Conical rotation, or a first person perspective
 
 SUN
 When idle: advance every Update
@@ -25,13 +20,10 @@ World invert command:
  - Return to idle at sunrise (or the time at inversion?)
 Cancelling the flip should revert the sun to its position when the space bar was pressed
 
+MAP GENERATION
+Visible surfaces from projected 3D terrain, or infer 3D structure from edge concavity of isometric paper drawing
+
 COMMENTS THAT DON'T FIT ELSEWHERE
-Either build the world in 3D and eviscerate occlusion, or draw as on isometric paper and infer 3D structure from edge concavity
 What order are the Start() routines called in for inherited objects?
 Triangulation
 Setting the ball's velocity to zero prior to flipping doesn't seem necessary. In fact, without adds an interesting mechanism of "creating" momentum.
-
-Reflection probe zone: Objects enter it, they receive the cube map defined by the origin of the probe.
-The sphere is not reflective, the *floor* is. So "size" irrelevant with only one probe in the scene?
-"The zones of the full set of probes should collectively cover all areas of the scene where a reflective object might pass."
-Why does the reflection look so terrible, regardless of resolution? Gah.
