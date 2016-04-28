@@ -3,21 +3,19 @@ using System;
 
 public class Sun : MonoBehaviour {
     public Camera_flip cf; // need the rotation speed
-    public double idle_rotation_speed = 0.5;
-    
-    double rotation_speed;
-    bool clockwise = true;
-    
-    bool is_day_time;
-    double camera_rotation_duration;
-    double hustle_factor;
     
     int day_of_year = 100;        // = 1 on January 1st
     double latitude = 51 * (Math.PI/180);        // The cafe next door is called 51 Degrees North
     double hour_at_start = 10;   // Start the game at 10am
+    double idle_rotation_speed = 0.5;
+    
+    double rotation_speed;
+    bool clockwise = true;
+    
     double hour_angle;           // Rotates by 15 degrees every hour. Zero at noon, positive in the afternoon
     double declination_angle;
     double hour_angle_at_sunset;
+    double camera_rotation_duration;
     
     // Sun position
     double altitude;
@@ -60,12 +58,12 @@ public class Sun : MonoBehaviour {
     }
     
     public void ForceSunset() {
-        is_day_time = Math.Abs(hour_angle) < hour_angle_at_sunset;
-        if (is_day_time) {
-            hustle_factor = (hour_angle_at_sunset - hour_angle) / (rotation_speed * camera_rotation_duration);
-            rotation_speed = hustle_factor * idle_rotation_speed;
-        } else {
+        bool is_night_time = Math.Abs(hour_angle - Math.PI) < (Math.PI - hour_angle_at_sunset);
+        if (is_night_time) {
             rotation_speed = 0;
+        } else {
+            double hustle_factor = 2*(hour_angle_at_sunset - hour_angle) / (rotation_speed * camera_rotation_duration);
+            rotation_speed = hustle_factor * idle_rotation_speed;
         }
     }
     
@@ -75,7 +73,7 @@ public class Sun : MonoBehaviour {
 
     public void NewDay() {
         // change the north direction
-        hour_angle = -hour_angle_at_sunset;
+        hour_angle = Math.PI;
         rotation_speed = idle_rotation_speed;
     }
     
