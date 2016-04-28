@@ -28,7 +28,7 @@ public class Sun : MonoBehaviour {
     
     void Start() {
         declination_angle = 23.45 * (Math.PI/180) * Math.Sin(2*Math.PI*(284 + day_of_year)/36.25);
-        hour_angle_at_sunset = -Math.Tan(declination_angle) * Math.Tan(latitude);
+        hour_angle_at_sunset = Math.Acos( -Math.Tan(declination_angle) * Math.Tan(latitude) );
         camera_rotation_duration = 180 / cf.rotationSpeed;
         hour_angle = (Math.PI/12)*(hour_at_start - 12);
         transform.rotation = Sun_rotation(hour_angle);
