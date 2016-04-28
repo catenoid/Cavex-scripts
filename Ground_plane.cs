@@ -27,10 +27,10 @@ public class Ground_plane : Visible_surface {
         
         // The bounding points of the plane, counter-clockwise from the corner nearest the camera
         Vector3[] bounds = new Vector3 [] {
-            new Vector3(30,0,30),
-            new Vector3(-30,0,30),
-            new Vector3(-30,0,-30),
-            new Vector3(30,0,-30),
+            new Vector3(100,0,100),
+            new Vector3(-100,0,100),
+            new Vector3(-100,0,-100),
+            new Vector3(100,0,-100),
         };
         
         // Populate concaveVerts with the required bounding points and cull points

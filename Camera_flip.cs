@@ -5,8 +5,9 @@ public class Camera_flip : MonoBehaviour {
     public Sun sun;
     public Surface[] map;
     public arrow_key_movement player;
+    public Ambient_flip amb;
 
-    public float rotationSpeed = 300;
+    public float rotationSpeed = 100;
 
     bool rotating = false;
     bool clockwise = true;
@@ -52,6 +53,7 @@ public class Camera_flip : MonoBehaviour {
     void DawnOnAlternatePlane() {
         rotating = false;
         sun.NewDay();
+        amb.Invert();
         foreach (Surface surface in map) {
             surface.Invert();
         }
