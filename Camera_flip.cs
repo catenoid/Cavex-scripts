@@ -15,8 +15,7 @@ public class Camera_flip : MonoBehaviour {
     float nextZ;
     float y_euler = 225f;
     
-    /* void Invert() {
-        // Extract the user input controller, and instead call Invert() when space is pressed
+    public void InvertCommand() {
         if (rotating) {
             clockwise = !clockwise;
             sun.Reverse();
@@ -25,19 +24,9 @@ public class Camera_flip : MonoBehaviour {
             rotating = true;
             sun.ForceSunset();
         }
-    } */
+    }
     
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (rotating) {
-                clockwise = !clockwise;
-                sun.Reverse();
-            } else {
-                clockwise = true;
-                rotating = true;
-                sun.ForceSunset();
-            }
-        }
         if (rotating) {
             if (clockwise) {
                 nextZ = z + Time.deltaTime * rotationSpeed;
