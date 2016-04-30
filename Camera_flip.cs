@@ -5,7 +5,7 @@ public class Camera_flip : MonoBehaviour {
     public Sun sun;
     public Surface[] map;
     public arrow_key_movement player;
-    public Ambient_flip amb;
+    public Ambient_flip ambientLight;
 
     public float rotationSpeed = 100;
 
@@ -13,8 +13,19 @@ public class Camera_flip : MonoBehaviour {
     bool clockwise = true;
     float z = 0;
     float nextZ;
-    
     float y_euler = 225f;
+    
+    /* void Invert() {
+        // Extract the user input controller, and instead call Invert() when space is pressed
+        if (rotating) {
+            clockwise = !clockwise;
+            sun.Reverse();
+        } else {
+            clockwise = true;
+            rotating = true;
+            sun.ForceSunset();
+        }
+    } */
     
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -31,7 +42,7 @@ public class Camera_flip : MonoBehaviour {
             if (clockwise) {
                 nextZ = z + Time.deltaTime * rotationSpeed;
                 if (nextZ >= 180) {
-                    DawnOnAlternatePlane();
+                    InversionCompleted();
                 }
             } else {
                 nextZ = z - Time.deltaTime * rotationSpeed;
@@ -44,20 +55,24 @@ public class Camera_flip : MonoBehaviour {
         }
     }
     
+    void InversionCompleted() {
+        rotating = false;
+        sun.NewDay();
+        ambientLight.Invert();
+        foreach (Surface surface in map) {
+            surface.Invert();
+        }
+        player.Invert();
+        moveCamera();
+    }
+    
     void InversionCancelled() {
         rotating = false;
         nextZ = 0;
         sun.AbortedInversion();
     }
     
-    void DawnOnAlternatePlane() {
-        rotating = false;
-        sun.NewDay();
-        amb.Invert();
-        foreach (Surface surface in map) {
-            surface.Invert();
-        }
-        player.Invert();
+    void moveCamera() {
         float offset = transform.position.x;
         Vector3 camera_displacement = new Vector3(offset, 0, offset);
         transform.position -= 2*camera_displacement;
