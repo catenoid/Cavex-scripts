@@ -2,28 +2,33 @@
 
 SPECIFICATIONS
 Player navigates a 3D surface, viewed through an isometric projection.
-Player can reflect world across the view vector. The terrain appears identical, but concave surfaces become convex and vice-versa. The camera rotates to preserve the direction of acceleration due to gravity.
-Player can add triangular tiles to the surface to manipulate the terrain. Due to the concave-convex relationship, adding tiles results in excavations in the alternative view.
+Player can reflect world across the view vector.
+The terrain appears identical, but concave surfaces become convex and vice-versa.
+The camera rotates to preserve the direction of acceleration due to gravity.
+Player can add triangular tiles to the surface to manipulate the terrain.
+Due to the concave-convex relationship, adding tiles results in excavations in the alternative view.
 
 --- Step goals ---
-FLIPPING THE PLAYER
-Only allow inversion when the player and player's reflection are visible.
-Smooth transition
+PLAYER INVERSION
+Only allow inversion when the player is visible and grounded
+Animate a smoother transition
+Velocity transform for continuous motion
 
 CAMERA
 Facility to view hidden terrain: Conical rotation, or a first person perspective
 
 SUN
 When idle: advance every Update
-World invert command:
+On inversion:
  - Advance so sunset coincides with the end of camera's motion (Stall if night)
  - Return to idle at sunrise (or the time at inversion?)
 Cancelling the flip should revert the sun to its position when the space bar was pressed
 
+MAP REPRESENTATION
 MAP GENERATION
-Visible surfaces from projected 3D terrain, or infer 3D structure from edge concavity of isometric paper drawing
 
 COMMENTS THAT DON'T FIT ELSEWHERE
 What order are the Start() routines called in for inherited objects?
-Triangulation
-Setting the ball's velocity to zero prior to flipping doesn't seem necessary. In fact, without adds an interesting mechanism of "creating" momentum.
+
+Potentially add support for walking on planes +x and +z
+Rotate the camera and gravity vector +-120 degrees
