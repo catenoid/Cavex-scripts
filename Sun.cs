@@ -40,6 +40,7 @@ public class Sun : MonoBehaviour {
             hour_angle -= Time.deltaTime * rotation_speed;
         }
         hour_angle = hour_angle % (2*Math.PI);
+        Debug.Log(hour_angle*(180/Math.PI));
         transform.rotation = Sun_rotation(hour_angle);
     }
     
@@ -62,7 +63,10 @@ public class Sun : MonoBehaviour {
         if (is_night_time) {
             rotation_speed = 0;
         } else {
-            double hustle_factor = 2*(hour_angle_at_sunset - hour_angle) / (rotation_speed * camera_rotation_duration);
+            // Aim to meet sunset a fraction through the camera's motion
+            // The rotation speed would remain at idle if, in fraction*c_r_d, the change in hour angle was that to get to sunset
+            // so hustle_factor == 1 when (hour_angle_at_sunset - hour_angle) == (fraction * c_r_d * idle_rotation_speed)
+            double hustle_factor = 2*(hour_angle_at_sunset - hour_angle) / (idle_rotation_speed * camera_rotation_duration);
             rotation_speed = hustle_factor * idle_rotation_speed;
         }
     }
@@ -72,9 +76,10 @@ public class Sun : MonoBehaviour {
     }
 
     public void NewDay() {
-        // change the north direction
-        hour_angle = Math.PI;
+        north -= 2* new Vector3(north.x, 0, 0);
+        hour_angle = -Math.PI;
         rotation_speed = idle_rotation_speed;
+        Reverse();
     }
     
     public void AbortedInversion() {
