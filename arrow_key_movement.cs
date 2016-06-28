@@ -20,8 +20,8 @@ public class arrow_key_movement : MonoBehaviour {
     } 
     
     void FixedUpdate () {
-		float horizontal = Input.GetAxis ("Horizontal");
-		float vertical = Input.GetAxis ("Vertical");
+		float horizontal = Input.GetAxis ("MovementHorizontal");
+		float vertical = Input.GetAxis ("MovementVertical");
 		Vector3 movement = moveUp*vertical -moveLeft*horizontal;
 		rb.AddForce(movement*speed);
     }
